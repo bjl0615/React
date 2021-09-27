@@ -1,15 +1,32 @@
-import { qs } from "../helpers.js";
+import { on, qs } from "../helpers.js";
 import View from "./View.js";
 
+const tag = "[SearchFormView]";
+
 export default class SearchFormView extends View {
-    constructor() {
-        super(qs("#search-form-view"));
+  constructor() {
+    console.log(tag, "constructor");
 
-        this.resetElemnts = qs("[type=reset]", this.element);
-        this.showResetButton(false);
-    }
+    super(qs("#search-form-view"));
 
-    showResetButton(visiable = true) {
-        this.resetElemnts.style.display = visiable ? "block" : "none";
-    }
+    this.inputElement = qs("[type=text]",this.element);
+    this.resetElement = qs("[type=reset]", this.element);
+
+    this.showResetButton(true);
+    this.bindEvent();
+  }
+
+  showResetButton(visible = true) {
+    this.resetElement.style.display = visible ? "block" : "none";
+  }
+
+  bindEvent(){
+    on(this.inputElement, "keyup", () => this.handleKeyup());
+  }
+
+  handleKeyup() {
+    console.log(tag, "handlekeyup", this.inputElement.value);
+    const {value} = this.inputElement
+    this.showResetButton(value.length > 0)
+  }
 }
