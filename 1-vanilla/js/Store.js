@@ -12,7 +12,7 @@ export default class Store {
 
     this.searchKeyword = "";
     this.searchResult = [];
-    this.selectedTab = TabType.HISTORY;
+    this.selectedTab = TabType.KEYWORD;
   }
 
   search(keyword) {
@@ -20,5 +20,9 @@ export default class Store {
     this.searchResult = this.storage.productData.filter((product) =>
       product.name.includes(keyword)
     );
+  }
+
+  getKeywordList() {
+    return this.storage.keywordData;
   }
 }
