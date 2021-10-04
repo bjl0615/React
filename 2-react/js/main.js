@@ -8,18 +8,17 @@ class App extends React.Component {
   }
 
   handleChangeInput(event) {
-    // this.state.searchKeyword =  event.target.value;
-    // this.forceUpdate();
-
-
-    //React에서 제공해주는 setState를 이용해서 값을 변경하자
-    this.setState({
-      searchKeyword: event.target.value
-    });
-
+    const searchKeyword = event.target.value;
+    this.setState({ searchKeyword });
   }
 
   render() {
+    // let resetButton = null;
+
+    // if(this.state.searchKeyword.length > 0 ){
+    //   resetButton = <button type="reset" className="btn-reset"></button>
+    // }
+
     return (
       <>
         <header>
@@ -32,10 +31,10 @@ class App extends React.Component {
               placeholder="검색어를 입력하세요"
               autoFocus
               value={this.state.searchKeyword}
-              // TODO
-              onChange={event => this.handleChangeInput(event)}
+              onChange={(event) => this.handleChangeInput(event)}
             />
-            <button type="reset" className="btn-reset"></button>
+            {this.state.searchKeyword.length > 0 && <button type="reset" className="btn-reset"></button>
+            }  
           </form>
         </div>
       </>
