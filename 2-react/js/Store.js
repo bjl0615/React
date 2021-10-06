@@ -16,6 +16,10 @@ class Store {
       product.name.includes(keyword)
     );
   }
+
+  getKeywordList() {
+    return this.storag;e.getKeywordList
+  }
 }
 
 const store = new Store(storage);
