@@ -7,7 +7,7 @@ class App extends React.Component {
     this.state = {
       searchKeyword: "",
       searchResult: [],
-      // TODO
+      submitted: false,
     };
   }
 
@@ -20,7 +20,7 @@ class App extends React.Component {
     const searchResult = store.search(searchKeyword);
     this.setState({
       searchResult,
-      // TODO
+      submitted : true,
     });
   }
 
@@ -35,14 +35,8 @@ class App extends React.Component {
   }
 
   render() {
-    // TODO
-    return (
-      <>
-        <header>
-          <h2 className="container">검색</h2>
-        </header>
-        <div className="container">
-          <form
+    const searchForm = 
+    <form
             onSubmit={(event) => this.handleSubmit(event)}
             onReset={() => this.handleReset()}
           >
@@ -56,20 +50,32 @@ class App extends React.Component {
             {this.state.searchKeyword.length > 0 && (
               <button type="reset" className="btn-reset"></button>
             )}
-          </form>
+    </form>
+
+    const searchResult = 
+      this.state.searchResult.length > 0 ? (
+        <ul className="result">
+          {this.state.searchResult.map(({ item, index }) => {
+            return (
+            <li key={item.id}>
+              <img src={item.imageUrl} />
+              <p>{item.name}</p>
+            </li>
+          );
+          })}
+        </ul>
+      ) : (
+        <div className="empty-box">검색 결과가 없습니다</div>
+      );
+    return (
+      <>
+        <header>
+          <h2 className="container">검색</h2>
+        </header>
+        <div className="container">
+          {searchForm}
           <div className="content">
-            {this.state.searchResult.length > 0 ? (
-              <ul className="result">
-                {this.state.searchResult.map(({ id, imageUrl, name }) => (
-                  <li>
-                    <img src={imageUrl} />
-                    <p>{name}</p>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <div className="empty-box">검색 결과가 없습니다</div>
-            )}
+            {this.state.submitted && searchResult}
           </div>
         </div>
       </>
