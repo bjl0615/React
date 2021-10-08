@@ -42,9 +42,12 @@ class App extends React.Component {
 
   search(searchKeyword) {
     const searchResult = store.search(searchKeyword);
+    const historyList = store.getHistoryList();
+
     this.setState({
       searchKeyword,
       searchResult,
+      historyList,
       submitted: true,
     });
   }
@@ -71,8 +74,8 @@ class App extends React.Component {
     event.stopPropagation();
 
     store.removeHistory(keyword);
-    const historyList = store.getHistoryList()
-    this.setState({historyList});
+    const historyList = store.getHistoryList();
+    this.setState({ historyList });
   }
 
   render() {
@@ -125,7 +128,10 @@ class App extends React.Component {
           <li key={id} onClick={() => this.search(keyword)}>
             <span>{keyword}</span>
             <span className="date">{formatRelativeDate(date)}</span>
-            <button className="btn-remove" onClick={event => this.handleClickRemoveHistory(event, keyword)}/>
+            <button
+              className="btn-remove"
+              onClick={(event) => this.handleClickRemoveHistory(event, keyword)}
+            />
           </li>
         ))}
       </ul>
