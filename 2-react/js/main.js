@@ -28,9 +28,10 @@ class App extends React.Component {
   componentDidMount() {
     const keywordList = store.getKeywordList();
     const historyList = store.getHistoryList();
+
     this.setState({
-      keywordList, 
-      historyList, 
+      keywordList,
+      historyList,
     });
   }
 
@@ -64,6 +65,14 @@ class App extends React.Component {
     }
 
     this.setState({ searchKeyword });
+  }
+
+  handleClickRemoveHistory(event, keyword) {
+    event.stopPropagation();
+
+    store.removeHistory(keyword);
+    const historyList = store.getHistoryList()
+    this.setState({historyList});
   }
 
   render() {
@@ -112,15 +121,13 @@ class App extends React.Component {
 
     const historyList = (
       <ul className="list">
-        {this.state.historyList.map(({id, keyword, date}) => {
-          return (
-            <li key={id} onClick={() => this.search(keyword)}>
-              <span>{keyword}</span>
-              <span className="date">{formatRelativeDate(date)}</span>
-              <button className="btn-remove"></button>
-            </li>
-          )
-        })}
+        {this.state.historyList.map(({ id, keyword, date }) => (
+          <li key={id} onClick={() => this.search(keyword)}>
+            <span>{keyword}</span>
+            <span className="date">{formatRelativeDate(date)}</span>
+            <button className="btn-remove" onClick={event => this.handleClickRemoveHistory(event, keyword)}/>
+          </li>
+        ))}
       </ul>
     );
 
