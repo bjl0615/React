@@ -8,7 +8,7 @@ export default class HistoryList extends React.Component {
     super();
 
     this.state = {
-      HistoryList: [],
+      historyList: [],
     };
   }
 
@@ -21,8 +21,7 @@ export default class HistoryList extends React.Component {
     this.setState({ historyList });
   }
 
-  handleClickRemove(event, keyword) {
-    event.stopPropagation();
+  handleClickRemove(keyword) {
     store.removeHistory(keyword);
     this.fetch();
   }
@@ -35,11 +34,13 @@ export default class HistoryList extends React.Component {
       <List
         data={historyList}
         onClick={onClick}
-        renderItem={(item) => (
-          <>
-            <span>{item.keyword}</span>
-          </>
-        )}
+        hasDate
+        onRemove = {(keyword) => this.handleClickRemove(keyword)}
+        // renderItem={(item) => (
+        //   <>
+        //     <span>{item.keyword}</span>
+        //   </>
+        // )}
       />
     );
   }
