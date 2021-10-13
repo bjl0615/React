@@ -4,32 +4,28 @@ import List from "./List.js";
 
 export default class KeywordList extends React.Component {
   constructor() {
-    super()
+    super();
 
     this.state = {
-      keywordList : [],
-    }
+      keywordList: [],
+    };
   }
+
   componentDidMount() {
     const keywordList = store.getKeywordList();
     this.setState({ keywordList });
   }
 
-
   render() {
+    const { onClick } = this.props;
+    const { keywordList } = this.state;
+
     return (
-      <List 
-        data={this.state.keywordList} 
-        onClick={this.props.onClick} 
-        renderItem={(item, index) => {
-          return (
-            <>
-              <span className="number">{index + 1}</span>
-              <span>{item.keyword}</span>
-            </>
-          )
-        }}
+      <List
+        data={keywordList}
+        onClick={onClick}
+        hasIndex={true}
       />
-    )
- }
+    );
+  }
 }
